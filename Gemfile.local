@@ -1,0 +1,27 @@
+group :development, :test do
+  gem 'pry', '<= 0.12.2' if RUBY_VERSION < '2.4'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'puma', '~> 3.7' # Used as capybara server
+
+  gem 'rubocop-no_keyword_args', git: 'https://github.com/agileware-jp/rubocop-no_keyword_args.git', require: false
+  unless dependencies.detect { |d| d.name == 'rubocop' }
+    gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
+  end
+end
+
+group :test do
+  # capybara/seleniumが古すぎてdndのテストがコケるので。
+  dependencies.reject! { |i| %w[capybara nokogiri selenium-webdriver].include? i.name }
+  gem 'capybara', '~> 3'
+  gem 'selenium-webdriver', '~> 3'
+  # NOTE: CircleCIのDockerイメージには予めgoogle-chromeとそれに合うバージョンのchromedriverが入っている
+  #       chromedriver-helperを入れると最新版がダウンロードされるためgoogle-chromeとバージョンが合わずエラーになることがある
+  unless ENV['CIRCLECI']
+    gem 'chromedriver-helper'
+  end
+  gem 'database_cleaner'
+  gem 'rspec_junit_formatter'
+end
