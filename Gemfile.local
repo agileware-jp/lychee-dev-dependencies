@@ -1,7 +1,9 @@
 group :development, :test do
-  gem 'pry', '<= 0.12.2' if RUBY_VERSION < '2.4'
-  gem 'pry-rails'
-  gem 'pry-byebug', (RUBY_VERSION >= '2.4' ? '>= 0' : '~> 3.6')
+  unless ENV['CI']
+    gem 'pry', '<= 0.12.2' if RUBY_VERSION < '2.4'
+    gem 'pry-rails'
+    gem 'pry-byebug', (RUBY_VERSION >= '2.4' ? '>= 0' : '~> 3.6')
+  end
 
   gem 'rspec-rails'
   gem 'factory_bot_rails'
