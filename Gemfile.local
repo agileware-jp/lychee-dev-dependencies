@@ -11,7 +11,7 @@ group :development, :test do
   gem 'rubocop', require: false unless dependencies.detect { |d| d.name == 'rubocop' }
   gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
 
-  gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', require: false
+  gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', branch: 'rspec-support', require: false
 end
 
 group :test do
