@@ -6,20 +6,16 @@ group :development, :test do
   end
 
   gem 'rspec-rails'
-  gem 'factory_bot_rails'
 
   gem 'rubocop', require: false unless dependencies.detect { |d| d.name == 'rubocop' }
   gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
 
-  gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'a904e6', require: false
+  dependencies.reject! { |i| %w[capybara nokogiri selenium-webdriver].include? i.name } # Ensure Capybara + Selenium have new version
+  gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: '2a1e2c', require: false
 end
 
 group :test do
-  dependencies.reject! { |i| %w[capybara nokogiri selenium-webdriver].include? i.name }
-  gem 'capybara', '~> 3'
-  gem 'selenium-webdriver', '~> 3'
   gem 'chromedriver-helper' unless ENV['CI']
   gem 'puma', '~> 3.7' if dependencies.none? { |i| i.name == 'puma' }
-  gem 'database_cleaner'
   gem 'rspec_junit_formatter'
 end
