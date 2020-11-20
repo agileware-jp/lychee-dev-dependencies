@@ -15,7 +15,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'chromedriver-helper' unless ENV['CI']
+  gem 'webdrivers'
   gem 'puma', '~> 3.7' if dependencies.none? { |i| i.name == 'puma' }
   gem 'rspec_junit_formatter'
 end
