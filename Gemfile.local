@@ -9,7 +9,7 @@ group :development, :test do
   gem 'factory_bot_rails'
 
   gem 'rubocop', require: false unless dependencies.detect { |d| d.name == 'rubocop' }
-  gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
+  gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', ref: 'a133443a', require: false
 
   gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'a904e6', require: false
 end
