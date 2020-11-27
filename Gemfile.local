@@ -11,7 +11,7 @@ group :development, :test do
   gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
 
   dependencies.reject! { |i| %w[capybara nokogiri selenium-webdriver].include? i.name } # Ensure Capybara + Selenium have new version
-  gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'bc7b0', require: false
+  gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: '98c9a95', require: false
 end
 
 group :test do
