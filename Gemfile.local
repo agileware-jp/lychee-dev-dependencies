@@ -23,7 +23,7 @@ group :development, :test do
 end
 
 group :rubocop, :development, :test do
-  dependencies.reject! { |i| %w[rubocop].include? i.name }
+  dependencies.reject! { |i| %w[rubocop rubocop-rails].include? i.name }
   gem 'rubocop', '0.81', require: false # ruby 2.3を対応している最新バージョン
   gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
   gem 'rubocop-no_keyword_args', git: 'https://github.com/agileware-jp/rubocop-no_keyword_args.git', require: false
