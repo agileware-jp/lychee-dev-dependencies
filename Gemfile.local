@@ -18,11 +18,17 @@ group :development, :test do
 
   gem 'rspec-rails', rspec_rails_version
 
-  gem 'rubocop', require: false unless dependencies.detect { |d| d.name == 'rubocop' }
-  gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
-
   dependencies.reject! { |i| %w[capybara nokogiri selenium-webdriver].include? i.name } # Ensure Capybara + Selenium have new version
   gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'v0.2.0', require: false
+end
+
+group :rubocop, :development, :test do
+  dependencies.reject! { |i| %w[rubocop].include? i.name }
+  gem 'rubocop', '0.81', require: false # ruby 2.3を対応している最新バージョン
+  gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
+  gem 'rubocop-no_keyword_args', git: 'https://github.com/agileware-jp/rubocop-no_keyword_args.git', require: false
+  gem 'rubocop-rails', '< 2.6.0', require: false # 2.6.0からrubocop >= 0.82が求められる
+  gem 'rubocop-performance', '< 1.7.0', require: false # 1.7.0からrubocop >= 0.82が求められる
 end
 
 group :test do
