@@ -1,3 +1,5 @@
+source 'https://rubygems.org'
+
 def rails4?
   rails_dependency = dependencies.find { |d| d.name == 'rails' }
   return false unless rails_dependency
