@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'https://rubygems.org' # CircleCIのrubocopジョブでGemfileとして使われるので、sourceが必須
 
 def rails4?
   rails_dependency = dependencies.find { |d| d.name == 'rails' }
@@ -24,13 +24,15 @@ group :development, :test do
   gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'v0.2.0', require: false
 end
 
+# CircleCIのrubocopジョブで、rubocopだけをインストールするためのグループ
 group :rubocop, :development, :test do
   dependencies.reject! { |i| %w[rubocop rubocop-rails rubocop-performance].include? i.name }
-  gem 'rubocop', '0.81', require: false # ruby 2.3を対応している最新バージョン
+  # ruby 2.3を対応している最新バージョン
+  gem 'rubocop', '0.81', require: false
   gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
   gem 'rubocop-no_keyword_args', git: 'https://github.com/agileware-jp/rubocop-no_keyword_args.git', require: false
-  gem 'rubocop-rails', '< 2.6.0', require: false # 2.6.0からrubocop >= 0.82が求められる
-  gem 'rubocop-performance', '< 1.7.0', require: false # 1.7.0からrubocop >= 0.82が求められる
+  gem 'rubocop-rails', '< 2.6.0', require: false         # 2.6.0からrubocop >= 0.82が求められる
+  gem 'rubocop-performance', '< 1.7.0', require: false   # 1.7.0からrubocop >= 0.82が求められる
 end
 
 group :test do
