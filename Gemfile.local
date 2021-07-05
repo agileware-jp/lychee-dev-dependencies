@@ -26,12 +26,11 @@ end
 
 # CircleCIのrubocopジョブで、rubocopだけをインストールするためのグループ
 group :rubocop, :development, :test do
-  dependencies.reject! { |i| %w[rubocop rubocop-rails rubocop-performance].include? i.name }
-  # ruby 2.3を対応している最新バージョン
-  gem 'rubocop', '0.81', require: false
-  gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
-  gem 'rubocop-rails', '< 2.6.0', require: false         # 2.6.0からrubocop >= 0.82が求められる
-  gem 'rubocop-performance', '< 1.7.0', require: false   # 1.7.0からrubocop >= 0.82が求められる
+  # 最新のバージョンを使うため、既存のバージョン指定を削除する
+  dependencies.reject! { |i| %w[rubocop rubocop-rails rubocop-performance rubocop-rspec].include? i.name }
+
+  # rubocop, rubocop-rails, rubocop-rspec, rubocop-performanceはrubocop-lycheeの依存に入っているので、記入しない
+  gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', ref: 'default-config', require: false
 end
 
 group :test do
