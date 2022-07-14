@@ -30,7 +30,7 @@ group :rubocop, :development, :test do
   dependencies.reject! { |i| %w[rubocop rubocop-rails rubocop-performance rubocop-rspec].include? i.name }
 
   # rubocop, rubocop-rails, rubocop-rspec, rubocop-performanceはrubocop-lycheeの依存に入っているので、記入しない
-  gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', ref: 'default-config', require: false
+  gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
 end
 
 group :test do
