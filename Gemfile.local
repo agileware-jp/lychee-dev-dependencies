@@ -1,3 +1,5 @@
+source 'https://rubygems.org' # CircleCIのrubocopジョブでGemfileとして使われるので、sourceが必須
+
 def rails4?
   rails_dependency = dependencies.find { |d| d.name == 'rails' }
   return false unless rails_dependency
@@ -18,11 +20,17 @@ group :development, :test do
 
   gem 'rspec-rails', rspec_rails_version
 
-  gem 'rubocop', require: false unless dependencies.detect { |d| d.name == 'rubocop' }
-  gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
-
   dependencies.reject! { |i| %w[capybara nokogiri selenium-webdriver].include? i.name } # Ensure Capybara + Selenium have new version
   gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'v0.3.0', require: false
+end
+
+# CircleCIのrubocopジョブで、rubocopだけをインストールするためのグループ
+group :rubocop, :development, :test do
+  # 最新のバージョンを使うため、既存のバージョン指定を削除する
+  dependencies.reject! { |i| %w[rubocop rubocop-rails rubocop-performance rubocop-rspec].include? i.name }
+
+  # rubocop, rubocop-rails, rubocop-rspec, rubocop-performanceはrubocop-lycheeの依存に入っているので、記入しない
+  gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', ref: 'default-config', require: false
 end
 
 group :test do
