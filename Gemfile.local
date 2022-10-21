@@ -35,6 +35,11 @@ end
 
 group :test do
   gem 'webdrivers' if dependencies.none? { |i| i.name == 'webdrivers' }
-  gem 'puma', '~> 3.7' if dependencies.none? { |i| i.name == 'puma' }
   gem 'rspec_junit_formatter'
+
+  # https://github.com/teamcapybara/capybara/pull/2530 を含んだcapybara.gemが
+  # リリースされれば以下は不要になる．
+  if dependencies.reject! { |i| i.name == 'puma' && i.requirements_list == [">= 0"] }
+    gem 'puma', '~> 5.6.4'
+  end
 end
