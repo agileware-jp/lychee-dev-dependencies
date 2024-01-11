@@ -21,7 +21,7 @@ group :development, :test do
   gem 'rspec-rails', rspec_rails_version
 
   dependencies.reject! { |i| %w[capybara nokogiri selenium-webdriver].include? i.name } # Ensure Capybara + Selenium have new version
-  gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'master', require: false
+  gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', require: false
 end
 
 # CircleCIのrubocopジョブで、rubocopだけをインストールするためのグループ
