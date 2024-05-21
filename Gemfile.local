@@ -33,7 +33,46 @@ group :rubocop, :development, :test do
   gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
 end
 
+def redmine_version(version_file = 'lib/redmine/version.rb')
+  require 'ripper'
+
+  exp = Ripper.sexp(File.read(version_file))
+
+  def sexp_walk(exp, &block)
+    return unless exp
+
+    if exp.is_a?(Array) && exp[0] == :assign
+      yield(exp)
+    else
+      exp.each do |child_exp|
+        if child_exp.is_a?(Array)
+          sexp_walk(child_exp, &block)
+        end
+      end
+    end
+  end
+
+  version = {}
+  sexp_walk(exp) do |exp|
+    next unless exp[1][1][0] == :@const
+    next unless exp[2][0] == :@int
+
+    const_name = exp[1][1][1]
+    const_value = exp[2][1]
+    version[const_name] = const_value
+  end
+
+  "#{version['MAJOR']}.#{version['MINOR']}.#{version['TINY']}"
+end
+
 group :test do
-  gem 'webdrivers' if dependencies.none? { |i| i.name == 'webdrivers' }
+  # Redmine v5.1以上は、selenium-webdriverの依存が4.11以上を設定可能
+  # ただし、selenium-webdirver 4.11以上はRuby3.0が必要なため、Ruby3.0未満の場合は3系を指定する
+  if RUBY_VERSION >= '3.0' && redmine_version > '5.1'
+    gem 'selenium-webdriver', '>= 4.11.0'
+  else
+    gem 'webdrivers' if dependencies.none? { |i| i.name == 'webdrivers' }
+    gem 'selenium-webdriver', '~> 3'
+  end
   gem 'rspec_junit_formatter'
 end
