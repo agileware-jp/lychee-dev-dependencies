@@ -21,7 +21,7 @@ group :development, :test do
   gem 'rspec-rails', rspec_rails_version
 
   dependencies.reject! { |i| %w[capybara nokogiri selenium-webdriver].include? i.name } # Ensure Capybara + Selenium have new version
-  gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'v0.6.0', require: false
+  gem 'lychee-dev', github: 'agileware-jp/lychee-dev', ref: 'v0.6.0', require: false
 end
 
 # CircleCIのrubocopジョブで、rubocopだけをインストールするためのグループ
@@ -30,7 +30,7 @@ group :rubocop, :development, :test do
   dependencies.reject! { |i| %w[rubocop rubocop-rails rubocop-performance rubocop-rspec].include? i.name }
 
   # rubocop, rubocop-rails, rubocop-rspec, rubocop-performanceはrubocop-lycheeの依存に入っているので、記入しない
-  gem 'rubocop-lychee', git: 'https://github.com/agileware-jp/rubocop-lychee.git', require: false
+  gem 'rubocop-lychee', github: 'agileware-jp/rubocop-lychee', require: false
 end
 
 def redmine_version(version_file = 'lib/redmine/version.rb')
