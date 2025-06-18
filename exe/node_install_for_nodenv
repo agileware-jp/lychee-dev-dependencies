@@ -1,0 +1,15 @@
+#!/bin/sh
+
+usage="usage: $(basename $0) node_version"
+
+set -eu
+
+version="${1:-unspec}"
+if test "$version" = unspec
+then
+  echo "$usage" 1>&2
+  exit 1
+fi
+
+set -x
+exec nodenv install --skip-existing "$version"
