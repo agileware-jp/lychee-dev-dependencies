@@ -1,0 +1,18 @@
+#!/bin/sh
+
+usage="usage: $(basename $0) node_version"
+
+set -eu
+
+version="${1:-unspec}"
+if test "$version" = unspec
+then
+  echo "$usage" 1>&2
+  exit 1
+fi
+
+if test "x$(node --version | sed -e 's/^v//')" != "x$version"
+then
+  echo "$version is not installed" 1>&2
+  exit 1
+fi
