@@ -1,0 +1,17 @@
+#!/bin/bash
+
+usage="usage: $(basename $0) node_version"
+
+set -eu -o pipefail
+
+version="${1:-unspec}"
+if test "$version" = unspec
+then
+  echo "$usage" 1>&2
+  exit 1
+fi
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+nvm install "$version"
