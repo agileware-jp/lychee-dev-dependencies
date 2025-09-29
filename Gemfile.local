@@ -54,14 +54,5 @@ def redmine_version(version_file = 'lib/redmine/version.rb')
 end
 
 group :test do
-  # ruby-3.0未満を見る必要がなくなったため，redmine-5.1以上の指定方法で良い
-  #
-  # - https://github.com/redmine/redmine/blob/5.0.14/Gemfile#L118-L119
-  # - https://github.com/redmine/redmine/blob/5.1.10/Gemfile#L110-L116
-  if redmine_version <= '5.0'
-    dependencies.reject! { |i| %w[capybara selenium-webdriver].include? i.name }
-    gem 'capybara', '>= 3.39'
-    gem 'selenium-webdriver', '>= 4.11.0'
-  end
   gem 'rspec_junit_formatter'
 end
