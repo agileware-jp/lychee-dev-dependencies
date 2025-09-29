@@ -2,9 +2,8 @@ source 'https://rubygems.org' # CircleCIのrubocopジョブでGemfileとして�
 
 group :development, :test do
   unless ENV['CI']
-    gem 'pry', '<= 0.12.2' if RUBY_VERSION < '2.4'
     gem 'pry-rails'
-    gem 'pry-byebug', (RUBY_VERSION >= '2.4' ? '>= 0' : '~> 3.6')
+    gem 'pry-byebug'
   end
 
   gem 'rspec-rails'
