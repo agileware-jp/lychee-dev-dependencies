@@ -1,16 +1,5 @@
 source 'https://rubygems.org' # CircleCIのrubocopジョブでGemfileとして使われるので、sourceが必須
 
-def rails4?
-  rails_dependency = dependencies.find { |d| d.name == 'rails' }
-  return false unless rails_dependency
-
-  rails_dependency.requirement.to_s.include? '= 4'
-end
-
-def rspec_rails_version
-  return '~> 4.0.1' if rails4?
-end
-
 group :development, :test do
   unless ENV['CI']
     gem 'pry', '<= 0.12.2' if RUBY_VERSION < '2.4'
@@ -18,7 +7,7 @@ group :development, :test do
     gem 'pry-byebug', (RUBY_VERSION >= '2.4' ? '>= 0' : '~> 3.6')
   end
 
-  gem 'rspec-rails', rspec_rails_version
+  gem 'rspec-rails'
 
   dependencies.reject! { |i| %w[capybara nokogiri selenium-webdriver].include? i.name } # Ensure Capybara + Selenium have new version
   gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'v0.12.0', require: false
