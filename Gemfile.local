@@ -8,7 +8,7 @@ group :development, :test do
 
   gem 'rspec-rails'
 
-  dependencies.reject! { |i| %w[capybara nokogiri selenium-webdriver].include? i.name } # Ensure Capybara + Selenium have new version
+  dependencies.reject! { |i| %w[nokogiri].include? i.name } # Ensure Capybara + Selenium have new version
   gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'v0.12.0', require: false
 end
 
@@ -54,13 +54,14 @@ def redmine_version(version_file = 'lib/redmine/version.rb')
 end
 
 group :test do
-  # Redmine v5.1以上は、selenium-webdriverの依存が4.11以上を設定可能
-  # ただし、selenium-webdirver 4.11以上はRuby3.0が必要なため、Ruby3.0未満の場合は3系を指定する
-  if RUBY_VERSION >= '3.0' && redmine_version >= '5.1'
+  # ruby-3.0未満を見る必要がなくなったため，redmine-5.1以上の指定方法で良い
+  #
+  # - https://github.com/redmine/redmine/blob/5.0.14/Gemfile#L118-L119
+  # - https://github.com/redmine/redmine/blob/5.1.10/Gemfile#L110-L116
+  if redmine_version <= '5.0'
+    dependencies.reject! { |i| %w[capybara selenium-webdriver].include? i.name }
+    gem 'capybara', '>= 3.39'
     gem 'selenium-webdriver', '>= 4.11.0'
-  else
-    gem 'webdrivers' if dependencies.none? { |i| i.name == 'webdrivers' }
-    gem 'selenium-webdriver', '~> 3'
   end
   gem 'rspec_junit_formatter'
 end
