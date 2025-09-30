@@ -9,7 +9,7 @@ group :development, :test do
   gem 'rspec-rails'
 
   dependencies.reject! { |i| %w[nokogiri].include? i.name } # Ensure Capybara + Selenium have new version
-  gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'v0.12.0', require: false
+  gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'v0.13.0'
 end
 
 # CircleCIのrubocopジョブで、rubocopだけをインストールするためのグループ
