@@ -1,0 +1,21 @@
+#!/bin/sh
+
+usage="usage: $(basename $0) bun_version"
+
+set -eu
+
+version="${1:-unspec}"
+if test "$version" = unspec
+then
+  echo "$usage" 1>&2
+  exit 1
+fi
+
+if command -v bun > /dev/null 2>&1 && test "$(bun --version)" = "$version"
+then
+  echo "bun $version is already installed"
+  exit 0
+fi
+
+set -x
+curl -fsSL https://bun.sh/install | bash -s "bun-v${version}"
