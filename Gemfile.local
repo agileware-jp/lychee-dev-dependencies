@@ -16,7 +16,7 @@ group :development, :test do
   gem 'rspec-rails'
 
   # Ensure Capybara + Selenium have new version
-  dependencies.reject! { |i| %w[capybara nokogiri selenium-webdriver].include? i.name }
+  dependencies.reject! { |i| %w[nokogiri].include? i.name }
   gem 'lychee-dev', git: 'https://github.com/agileware-jp/lychee-dev.git', ref: 'v0.16.0'
 end
 
